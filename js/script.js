@@ -10,7 +10,7 @@ trackArea.addEventListener('mouseout', () => {
     
     pointerDot.style.left = '0px';
     pointerDot.style.top = '0px';
-    trackStatus.textContent = 'Указатель вышел за пределы площадки';
+    trackStatus.textContent = 'Указатель не в квардрате';
 });
 
 trackArea.addEventListener('mouseover', () => {
@@ -26,8 +26,20 @@ trackArea.addEventListener('mousemove', (event) => {
     pointerDot.style.top = `${y}px`;
     const areaWidth = trackArea.offsetWidth;
     if (x < areaWidth / 2) {
-        trackStatus.textContent = `Внутри площадки: Левая половина (X: ${x})`;
+        if (y < 160) {
+            trackStatus.textContent = "левая верхняя четверть"
+        }
+        if (y > 160) {
+            trackStatus.textContent = "левая нижняя четверть"
+        }
+        
     } else {
-        trackStatus.textContent = `Внутри площадки: Правая половина (X: ${x})`;
+        if (y < 160) {
+            trackStatus.textContent = "правая верхняя четверть"
+        }
+        if (y > 160) {
+            trackStatus.textContent = "правая нижняя четверть"
+        }
+        
     }
 });
