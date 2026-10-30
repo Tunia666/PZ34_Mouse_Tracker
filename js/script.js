@@ -1,16 +1,33 @@
-"use strict";
+const trackArea = document.querySelector('#track-area');
+const pointerDot = document.querySelector('#pointer-dot');
+const coordX = document.querySelector('#coord-x');
+const coordY = document.querySelector('#coord-y');
+const trackStatus = document.querySelector('#track-status');
+trackArea.addEventListener('mouseout', () => {
+    trackArea.classList.remove('is-inside');
+    coordX.textContent = '-';
+    coordY.textContent = '-';
+    
+    pointerDot.style.left = '0px';
+    pointerDot.style.top = '0px';
+    trackStatus.textContent = 'Указатель вышел за пределы площадки';
+});
 
-const area = document.querySelector("#track-area");
-const dot = document.querySelector("#pointer-dot");
-const xText = document.querySelector("#coord-x");
-const yText = document.querySelector("#coord-y");
-const status = document.querySelector("#track-status");
-
-// Задание 1. На mouseover добавьте класс is-inside и обновите status.
-
-// Задание 2. На mousemove получите event.offsetX и event.offsetY.
-// Покажите координаты и переместите dot через style.left/style.top (px).
-
-// Задание 3. На mouseout уберите класс, очистите координаты и сообщение.
-// В этой площадке дочерние элементы имеют pointer-events:none,
-// поэтому перемещение по ним не вызывает лишних mouseout/mouseover.
+trackArea.addEventListener('mouseover', () => {
+    trackArea.classList.add('is-inside');
+    trackStatus.textContent = 'Указатель находится внутри площадки';
+});
+trackArea.addEventListener('mousemove', (event) => {
+    const x = Math.round(event.offsetX);
+    const y = Math.round(event.offsetY);
+    coordX.textContent = x;
+    coordY.textContent = y;
+    pointerDot.style.left = `${x}px`;
+    pointerDot.style.top = `${y}px`;
+    const areaWidth = trackArea.offsetWidth;
+    if (x < areaWidth / 2) {
+        trackStatus.textContent = `Внутри площадки: Левая половина (X: ${x})`;
+    } else {
+        trackStatus.textContent = `Внутри площадки: Правая половина (X: ${x})`;
+    }
+});
