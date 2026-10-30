@@ -12,8 +12,11 @@ trackArea.addEventListener('mouseover', () => {
 });
 
 trackArea.addEventListener('mousemove', (event) => {
-    const x = Math.round(event.offsetX);
-    const y = Math.round(event.offsetY);
+
+    const rect = trackArea.getBoundingClientRect();
+    
+    const x = Math.round(event.clientX - rect.left);
+    const y = Math.round(event.clientY - rect.top);
 
     coordX.textContent = x;
     coordY.textContent = y;
@@ -24,7 +27,9 @@ trackArea.addEventListener('mousemove', (event) => {
 
 trackArea.addEventListener('mouseout', () => {
     trackArea.classList.remove('is-inside');
+    
     coordX.textContent = '-';
     coordY.textContent = '-';
+    
     trackStatus.textContent = 'Курсор вышел из области';
 });
