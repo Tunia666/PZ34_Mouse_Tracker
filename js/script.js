@@ -6,11 +6,26 @@ const xText = document.querySelector("#coord-x");
 const yText = document.querySelector("#coord-y");
 const status = document.querySelector("#track-status");
 
-// Задание 1. На mouseover добавьте класс is-inside и обновите status.
+area.addEventListener("mouseover", () => {
+  area.classList.add("is-inside");
+  status.textContent = "Указатель внутри площадки";
+});
 
-// Задание 2. На mousemove получите event.offsetX и event.offsetY.
-// Покажите координаты и переместите dot через style.left/style.top (px).
+area.addEventListener("mousemove", (event) => {
+  const localX = event.offsetX;
+  const localY = event.offsetY;
 
-// Задание 3. На mouseout уберите класс, очистите координаты и сообщение.
-// В этой площадке дочерние элементы имеют pointer-events:none,
-// поэтому перемещение по ним не вызывает лишних mouseout/mouseover.
+  xText.textContent = localX;
+  yText.textContent = localY;
+
+  dot.style.left = `${localX}px`;
+  dot.style.top = `${localY}px`;
+});
+
+area.addEventListener("mouseout", () => {
+  area.classList.remove("is-inside");
+  xText.textContent = "0";
+  yText.textContent = "0";
+  status.textContent = "Указатель вне площадки";
+});
+
